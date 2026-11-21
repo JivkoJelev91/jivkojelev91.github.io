@@ -5,17 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Zhelev Lab · Apps</title>
 <meta name="description" content="Android apps by Zhelev Lab: OutGym Finder and Crocobu.">
-<link rel="icon" href="/outgym-finder/favicon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Oswald:wght@600;700&family=Nunito:wght@800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Oswald:wght@600;700&family=Nunito:wght@800;900&display=swap">
 <style>
   :root {
     --page: #f4f4f6;
     --page-ink: #15151a;
     --page-muted: #5b5b66;
+    --page-line: #e2e2e8;
+    --chip: #ffffff;
+    --glow-a: rgba(163, 255, 18, 0.35);
+    --glow-b: rgba(95, 208, 74, 0.25);
+    --glow-c: rgba(143, 230, 255, 0.45);
     --outgym-bg: #0b0b0f;
-    --outgym-card: #15151a;
     --outgym-line: #27272a;
     --outgym-ink: #ffffff;
     --outgym-muted: #a1a1aa;
@@ -23,177 +27,205 @@
     --outgym-accent-ink: #0b0b0f;
     --croco-bg: #0b2a2e;
     --croco-panel: #14334a;
+    --croco-line: #1d4a5e;
     --croco-ink: #f2fbff;
     --croco-muted: #a8d8de;
     --croco-accent: #ffd23f;
     --croco-accent-ink: #0b2233;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --page: #08080b;
       --page-ink: #f4f4f6;
       --page-muted: #a1a1aa;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --page-line: #23232a;
+      --chip: #15151a;
+      --glow-a: rgba(163, 255, 18, 0.14);
+      --glow-b: rgba(95, 208, 74, 0.12);
+      --glow-c: rgba(143, 230, 255, 0.12);
+      --shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
     }
   }
   :root[data-theme="dark"] {
     --page: #08080b;
     --page-ink: #f4f4f6;
     --page-muted: #a1a1aa;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --page-line: #23232a;
+    --chip: #15151a;
+    --glow-a: rgba(163, 255, 18, 0.14);
+    --glow-b: rgba(95, 208, 74, 0.12);
+    --glow-c: rgba(143, 230, 255, 0.12);
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
   }
 
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
     min-height: 100vh;
-    min-height: 100dvh;
     background: var(--page);
     color: var(--page-ink);
     font-family: Manrope, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 16px;
+    overflow-x: hidden;
   }
-  header { text-align: center; margin-bottom: 32px; max-width: 560px; }
+  .glow { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .glow span { position: absolute; border-radius: 50%; filter: blur(80px); }
+  .glow .a { width: 420px; height: 420px; background: var(--glow-a); top: -140px; left: -120px; }
+  .glow .b { width: 380px; height: 380px; background: var(--glow-b); bottom: -160px; right: -100px; }
+  .glow .c { width: 300px; height: 300px; background: var(--glow-c); top: 30%; right: 20%; }
+
+  .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 56px 16px 32px; }
+
+  header { text-align: center; margin-bottom: 40px; }
+  .brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 16px; border-radius: 999px;
+    background: var(--chip); border: 1px solid var(--page-line);
+    font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  .brand img { display: block; border-radius: 6px; }
   header h1 {
-    margin: 0 0 8px;
-    font-size: clamp(26px, 5vw, 36px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    margin: 20px 0 12px;
+    font-size: clamp(34px, 7vw, 56px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
   }
-  header p { margin: 0; color: var(--page-muted); font-size: 16px; line-height: 1.5; }
-  header .brand {
-    margin-bottom: 10px;
-    color: var(--page-ink);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+  header h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #5fd04a, #22c1c3);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-
-  .apps {
-    width: 100%;
-    max-width: 880px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+  header p { margin: 0 auto; max-width: 520px; color: var(--page-muted); font-size: 17px; line-height: 1.55; }
+  .stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .stats span {
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    background: var(--chip); border: 1px solid var(--page-line); color: var(--page-muted);
   }
 
+  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .app {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 28px;
-    border-radius: 24px;
-    text-decoration: none;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    display: flex; flex-direction: column;
+    border-radius: 26px; overflow: hidden; box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
   }
-  .app:hover, .app:focus-visible { transform: translateY(-4px); }
-  .app:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-
-  .app .badge {
-    width: 72px;
-    height: 72px;
-    border-radius: 18px;
-    display: grid;
-    place-items: center;
-    font-size: 42px;
-    flex: none;
+  .app:hover { transform: translateY(-4px); }
+  .banner { position: relative; display: block; height: 190px; overflow: hidden; }
+  .banner img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .app:hover .banner img { transform: scale(1.04); }
+  .banner::after { content: ""; position: absolute; inset: 0; }
+  .body { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 0 26px 26px; flex: 1; }
+  .icon {
+    width: 76px; height: 76px; border-radius: 20px; margin-top: -38px;
+    border: 4px solid var(--card-bg); background: var(--card-bg); display: block;
   }
-  .app .badge img { width: 100%; height: 100%; border-radius: inherit; display: block; }
   .app h2 { margin: 0; line-height: 1.1; }
-  .app p { margin: 0; line-height: 1.55; font-size: 15px; flex: 1; }
-  .app .go {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 15px;
+  .app h2 a { color: inherit; text-decoration: none; }
+  .app .kind { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .app p { margin: 0; line-height: 1.55; font-size: 15px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+  .tags li { padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 6px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 18px; border-radius: 999px; font-weight: 700; font-size: 15px; text-decoration: none;
   }
-  .app .go svg { transition: transform 0.18s ease; }
-  .app:hover .go svg { transform: translateX(3px); }
+  .btn svg { transition: transform 0.18s ease; }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
   .outgym {
-    --accent: var(--outgym-accent);
-    background:
-      radial-gradient(120% 80% at 100% 0%, rgba(163, 255, 18, 0.16), transparent 60%),
-      var(--outgym-bg);
-    color: var(--outgym-ink);
-    border: 1px solid var(--outgym-line);
+    --card-bg: var(--outgym-bg); --accent: var(--outgym-accent);
+    background: radial-gradient(120% 60% at 100% 100%, rgba(163, 255, 18, 0.12), transparent 60%), var(--outgym-bg);
+    color: var(--outgym-ink); border: 1px solid var(--outgym-line);
   }
-  .outgym .badge { background: var(--outgym-card); }
-  .outgym h2 {
-    font-family: Oswald, Manrope, sans-serif;
-    font-weight: 700;
-    font-size: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-  }
-  .outgym h2 span { color: var(--outgym-accent); }
+  .outgym .banner img { object-position: 50% 52%; }
+  .outgym .banner::after { background: linear-gradient(180deg, transparent 40%, var(--outgym-bg)); }
+  .outgym h2 { font-family: Oswald, Manrope, sans-serif; font-weight: 700; font-size: 32px; text-transform: uppercase; letter-spacing: 0.02em; }
+  .outgym h2 span, .outgym .kind { color: var(--outgym-accent); }
   .outgym p { color: var(--outgym-muted); }
-  .outgym .go { background: var(--outgym-accent); color: var(--outgym-accent-ink); }
+  .outgym .tags li { background: rgba(163, 255, 18, 0.1); color: var(--outgym-accent); border: 1px solid rgba(163, 255, 18, 0.25); }
+  .outgym .btn.primary { background: var(--outgym-accent); color: var(--outgym-accent-ink); }
+  .outgym .btn.ghost { color: var(--outgym-ink); border: 1px solid var(--outgym-line); }
 
   .croco {
-    --accent: var(--croco-accent);
-    background:
-      radial-gradient(120% 80% at 100% 0%, rgba(95, 208, 74, 0.22), transparent 60%),
-      linear-gradient(160deg, var(--croco-panel), var(--croco-bg));
-    color: var(--croco-ink);
-    border: 1px solid #1d4a5e;
+    --card-bg: var(--croco-bg); --accent: var(--croco-accent);
+    background: linear-gradient(170deg, var(--croco-panel), var(--croco-bg));
+    color: var(--croco-ink); border: 1px solid var(--croco-line);
   }
-  .croco .badge { background: rgba(242, 251, 255, 0.1); }
-  .croco h2 { font-family: Nunito, Manrope, sans-serif; font-weight: 900; font-size: 32px; }
+  .croco .banner img { object-position: 85% 50%; }
+  .croco .banner::after { background: linear-gradient(180deg, transparent 45%, var(--croco-panel)); }
+  .croco .icon { border-color: var(--croco-panel); background: var(--croco-panel); }
+  .croco h2 { font-family: Nunito, Manrope, sans-serif; font-weight: 900; font-size: 34px; }
+  .croco .kind { color: var(--croco-accent); }
   .croco p { color: var(--croco-muted); }
-  .croco .go { background: var(--croco-accent); color: var(--croco-accent-ink); }
+  .croco .tags li { background: rgba(255, 210, 63, 0.12); color: var(--croco-accent); border: 1px solid rgba(255, 210, 63, 0.3); }
+  .croco .btn.primary { background: var(--croco-accent); color: var(--croco-accent-ink); }
 
-  footer { margin-top: 36px; color: var(--page-muted); font-size: 13px; text-align: center; }
+  .about {
+    margin-top: 40px; padding: 28px; border-radius: 24px; text-align: center;
+    background: var(--chip); border: 1px solid var(--page-line);
+  }
+  .about h3 { margin: 0 0 8px; font-size: 20px; }
+  .about p { margin: 0 auto; max-width: 560px; color: var(--page-muted); line-height: 1.6; }
+
+  footer { margin-top: 32px; color: var(--page-muted); font-size: 13px; text-align: center; }
   footer a { color: inherit; }
 
   @media (prefers-reduced-motion: reduce) {
-    .app, .app .go svg { transition: none; }
-    .app:hover, .app:focus-visible { transform: none; }
+    .app, .banner img, .btn svg { transition: none; }
+    .app:hover, .app:hover .banner img { transform: none; }
   }
 </style>
 </head>
 <body>
-  <header>
-    <h1>Choose an app</h1>
-    <p class="brand">by Zhelev Lab</p>
-    <p>Android apps. Pick one to open its website.</p>
-  </header>
+  <div class="glow" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
 
-  <main class="apps">
-    <a class="app outgym" href="/outgym-finder/">
-      <div class="badge"><img src="/outgym-finder/assets/icon.png" alt="" width="72" height="72"></div>
-      <h2>OutGym <span>Finder</span></h2>
-      <p>Find outdoor calisthenics spots near you: pull-up bars, dips, rings and more. Train, earn XP and add missing spots.</p>
-      <span class="go">Open website
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-    </a>
+  <div class="wrap">
+    <header>
+      <span class="brand"><img src="/favicon.svg" alt="" width="20" height="20">by Zhelev Lab</span>
+      <h1>Apps made to <em>get you moving</em></h1>
+      <p>Two Android apps: one sends you outside to train, the other sends a little crocodile on an adventure. Pick one to learn more.</p>
+      <div class="stats"><span>📱 Android</span><span>🏋️ Fitness</span><span>🎮 Game</span></div>
+    </header>
 
-    <a class="app croco" href="/crocobu-site/">
-      <div class="badge"><img src="/assets/crocobu-icon.png" alt="" width="72" height="72"></div>
-      <h2>Crocobu</h2>
-      <p>An Android game: a little crocodile explores turquoise rivers, catches fish, grows up and completes missions in five zones.</p>
-      <span class="go">Open website
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-    </a>
-  </main>
+    <main class="apps">
+      <article class="app outgym">
+        <a class="banner" href="/outgym-finder/" tabindex="-1" aria-hidden="true"><img src="/outgym-finder/assets/sunset.jpg" alt="" loading="lazy"></a>
+        <div class="body">
+          <img class="icon" src="/outgym-finder/assets/icon.png" alt="" width="76" height="76">
+          <span class="kind">Outdoor fitness</span>
+          <h2><a href="/outgym-finder/">OutGym <span>Finder</span></a></h2>
+          <p>Find outdoor calisthenics spots near you: pull-up bars, dips, rings and more. See the equipment and its condition, train, earn XP and add missing spots.</p>
+          <ul class="tags"><li>🗺️ Spots map</li><li>💪 Workouts</li><li>⭐ XP &amp; streaks</li></ul>
+          <div class="actions">
+            <a class="btn primary" href="/outgym-finder/">Website
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.outgym.finder">▶ Google Play</a>
+          </div>
+        </div>
+      </article>
 
-  <footer>
-    © Zhelev Lab · <a href="/app-ads.txt">app-ads.txt</a>
-  </footer>
+      <article class="app croco">
+        <a class="banner" href="/crocobu-site/" tabindex="-1" aria-hidden="true"><img src="/assets/crocobu-banner.png" alt="" loading="lazy"></a>
+        <div class="body">
+          <img class="icon" src="/assets/crocobu-icon.png" alt="" width="76" height="76">
+          <span class="kind">Adventure game</span>
+          <h2><a href="/crocobu-site/">Crocobu</a></h2>
+          <p>Hatch a baby croco, swim magical rivers and beat the guardians of each world. A cosy 3D adventure for all ages.</p>
+          <ul class="tags"><li>🐟 Catch fish</li><li>⚔️ Missions &amp; bosses</li><li>🎩 Dress up your croco</li></ul>
+          <div class="actions">
+            <a class="btn primary" href="/crocobu-site/">Website
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <section class="about">
+      <h3>About Zhelev Lab</h3>
+      <p>A one-person studio building small Android apps with care: no clutter, just the thing you opened the app for.</p>
+    </section>
+
+    <footer>© 2026 Zhelev Lab · <a href="/app-ads.txt">app-ads.txt</a></footer>
+  </div>
 </body>
 </html>
