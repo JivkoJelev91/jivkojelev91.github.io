@@ -2,12 +2,189 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OutGym Finder</title>
-<meta http-equiv="refresh" content="0; url=/outgym-finder/">
-<link rel="canonical" href="https://jivkojelev91.github.io/outgym-finder/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jivko Jelev · Apps</title>
+<meta name="description" content="Android apps by Jivko Jelev: OutGym Finder and Crocobu.">
+<link rel="icon" href="/outgym-finder/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Oswald:wght@600;700&family=Nunito:wght@800;900&display=swap">
+<style>
+  :root {
+    --page: #f4f4f6;
+    --page-ink: #15151a;
+    --page-muted: #5b5b66;
+    --outgym-bg: #0b0b0f;
+    --outgym-card: #15151a;
+    --outgym-line: #27272a;
+    --outgym-ink: #ffffff;
+    --outgym-muted: #a1a1aa;
+    --outgym-accent: #a3ff12;
+    --outgym-accent-ink: #0b0b0f;
+    --croco-bg: #0b2a2e;
+    --croco-panel: #14334a;
+    --croco-ink: #f2fbff;
+    --croco-muted: #a8d8de;
+    --croco-accent: #ffd23f;
+    --croco-accent-ink: #0b2233;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --page: #08080b;
+      --page-ink: #f4f4f6;
+      --page-muted: #a1a1aa;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --page: #08080b;
+    --page-ink: #f4f4f6;
+    --page-muted: #a1a1aa;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--page);
+    color: var(--page-ink);
+    font-family: Manrope, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 16px;
+  }
+  header { text-align: center; margin-bottom: 32px; max-width: 560px; }
+  header h1 {
+    margin: 0 0 8px;
+    font-size: clamp(26px, 5vw, 36px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  header p { margin: 0; color: var(--page-muted); font-size: 16px; line-height: 1.5; }
+
+  .apps {
+    width: 100%;
+    max-width: 880px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 28px;
+    border-radius: 24px;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .app:hover, .app:focus-visible { transform: translateY(-4px); }
+  .app:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+  .app .badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 42px;
+    flex: none;
+  }
+  .app .badge img { width: 100%; height: 100%; border-radius: inherit; display: block; }
+  .app h2 { margin: 0; line-height: 1.1; }
+  .app p { margin: 0; line-height: 1.55; font-size: 15px; flex: 1; }
+  .app .go {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .app .go svg { transition: transform 0.18s ease; }
+  .app:hover .go svg { transform: translateX(3px); }
+
+  .outgym {
+    --accent: var(--outgym-accent);
+    background:
+      radial-gradient(120% 80% at 100% 0%, rgba(163, 255, 18, 0.16), transparent 60%),
+      var(--outgym-bg);
+    color: var(--outgym-ink);
+    border: 1px solid var(--outgym-line);
+  }
+  .outgym .badge { background: var(--outgym-card); }
+  .outgym h2 {
+    font-family: Oswald, Manrope, sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .outgym h2 span { color: var(--outgym-accent); }
+  .outgym p { color: var(--outgym-muted); }
+  .outgym .go { background: var(--outgym-accent); color: var(--outgym-accent-ink); }
+
+  .croco {
+    --accent: var(--croco-accent);
+    background:
+      radial-gradient(120% 80% at 100% 0%, rgba(95, 208, 74, 0.22), transparent 60%),
+      linear-gradient(160deg, var(--croco-panel), var(--croco-bg));
+    color: var(--croco-ink);
+    border: 1px solid #1d4a5e;
+  }
+  .croco .badge { background: rgba(242, 251, 255, 0.1); }
+  .croco h2 { font-family: Nunito, Manrope, sans-serif; font-weight: 900; font-size: 32px; }
+  .croco p { color: var(--croco-muted); }
+  .croco .go { background: var(--croco-accent); color: var(--croco-accent-ink); }
+
+  footer { margin-top: 36px; color: var(--page-muted); font-size: 13px; text-align: center; }
+  footer a { color: inherit; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app, .app .go svg { transition: none; }
+    .app:hover, .app:focus-visible { transform: none; }
+  }
+</style>
 </head>
 <body>
-<p><a href="/outgym-finder/">OutGym Finder</a> · <a href="/crocobu-site/">Crocobu</a></p>
+  <header>
+    <h1>Choose an app</h1>
+    <p>Android apps by Jivko Jelev. Pick one to open its website.</p>
+  </header>
+
+  <main class="apps">
+    <a class="app outgym" href="/outgym-finder/">
+      <div class="badge"><img src="/outgym-finder/assets/icon.png" alt="" width="72" height="72"></div>
+      <h2>OutGym <span>Finder</span></h2>
+      <p>Find outdoor calisthenics spots near you: pull-up bars, dips, rings and more. Train, earn XP and add missing spots.</p>
+      <span class="go">Open website
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+
+    <a class="app croco" href="/crocobu-site/">
+      <div class="badge" aria-hidden="true">🐊</div>
+      <h2>Crocobu</h2>
+      <p>An Android game: a little crocodile explores turquoise rivers, catches fish, grows up and completes missions in five zones.</p>
+      <span class="go">Open website
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </main>
+
+  <footer>
+    <a href="/app-ads.txt">app-ads.txt</a>
+  </footer>
 </body>
 </html>
