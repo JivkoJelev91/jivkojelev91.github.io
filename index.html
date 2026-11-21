@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Jivko Jelev · Apps</title>
-<meta name="description" content="Android apps by Jivko Jelev: OutGym Finder and Crocobu.">
+<title>Zhelev Lab · Apps</title>
+<meta name="description" content="Android apps by Zhelev Lab: OutGym Finder and Crocobu.">
 <link rel="icon" href="/outgym-finder/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -66,6 +66,14 @@
     letter-spacing: -0.02em;
   }
   header p { margin: 0; color: var(--page-muted); font-size: 16px; line-height: 1.5; }
+  header .brand {
+    margin-bottom: 10px;
+    color: var(--page-ink);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
 
   .apps {
     width: 100%;
@@ -160,7 +168,8 @@
 <body>
   <header>
     <h1>Choose an app</h1>
-    <p>Android apps by Jivko Jelev. Pick one to open its website.</p>
+    <p class="brand">by Zhelev Lab</p>
+    <p>Android apps. Pick one to open its website.</p>
   </header>
 
   <main class="apps">
@@ -174,7 +183,7 @@
     </a>
 
     <a class="app croco" href="/crocobu-site/">
-      <div class="badge" aria-hidden="true">🐊</div>
+      <div class="badge"><img src="/assets/crocobu-icon.png" alt="" width="72" height="72"></div>
       <h2>Crocobu</h2>
       <p>An Android game: a little crocodile explores turquoise rivers, catches fish, grows up and completes missions in five zones.</p>
       <span class="go">Open website
@@ -184,7 +193,7 @@
   </main>
 
   <footer>
-    <a href="/app-ads.txt">app-ads.txt</a>
+    © Zhelev Lab · <a href="/app-ads.txt">app-ads.txt</a>
   </footer>
 </body>
 </html>
